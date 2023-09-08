@@ -46,7 +46,7 @@
           <div class="banner-description">Enhance videos with stunning visual effects</div>
         </div>
       </div>
-      <div class="banner-item coming-soon">
+      <div class="banner-item coming-soon hidden">
         <div class="banner-icon"><i class="pi pi-camera"></i></div>
         <div class="banner-content-container">
           <div class="banner-header with-tag">Record a video <Tag value="Coming Soon"></Tag></div>
