@@ -46,6 +46,13 @@
           <div class="banner-description">Enhance videos with stunning visual effects</div>
         </div>
       </div>
+      <div class="banner-item coming-soon">
+        <div class="banner-icon"><i class="pi pi-camera"></i></div>
+        <div class="banner-content-container">
+          <div class="banner-header with-tag">Record a video <Tag value="Coming Soon"></Tag></div>
+          <div class="banner-description">Directly record a video with your device's camera</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -67,46 +74,71 @@ export default {
 .home-banner {
   display: flex;
   flex-flow: column;
-  padding-top: 1.5rem;
+  padding-top: 1rem;
 }
 .hero-banner {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
 .banner-item-row {
-  margin: 3rem 0 2rem 0;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  max-width: 576px;
+  margin: 3rem auto 5rem auto;
+  display: grid;
+  grid-template: 1fr / fit-content(100%);
+  align-items: self-start;
   justify-content: center;
   flex-flow: column;
   column-gap: 2rem;
-  row-gap: 2rem;
+  row-gap: 3rem;
 }
 
 .banner-item {
   cursor: pointer;
+
+  &.coming-soon {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 2rem;
+    padding: 2rem;
+    background: #eeeeee0a;
+    border-radius: 6px;
+  }
+}
+
+.banner-icon i {
+  font-size: 5rem;
 }
 
 .banner-description {
-  font-size: 1.4rem;
+  font-size: 1rem;
   opacity: 0.5;
 }
 
 .banner-header {
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: bold;
+
+  &.with-tag {
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+  }
 }
 
 .banner-media-container {
   position: relative;
-  width: min-content;
   border-radius: 6px;
   overflow: hidden;
+  width: 100%;
+  margin-bottom: 0.5rem;
 }
 .banner-media-main {
-  width: 420px;
+  width: 100%;
   display: block;
 }
 .banner-media-secondary {
@@ -141,6 +173,8 @@ export default {
   background: rgba(28, 28, 28, 0.2);
   backdrop-filter: blur(30px);
   row-gap: 0.5rem;
+  font-size: 0.8rem;
+  padding: 0.5rem;
   opacity: 0;
 
   .banner-item:hover & {
@@ -150,11 +184,11 @@ export default {
 }
 
 .banner-overlay-icon i {
-  font-size: 3rem;
+  font-size: 3em;
 }
 
 .banner-overlay-title {
-  font-size: 1.5rem;
+  font-size: 1.5em;
 }
 
 .banner-overlay-desc {
@@ -184,16 +218,35 @@ export default {
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
+  .hero-banner {
+    font-size: 2.5rem;
+  }
+  .home-banner {
+    padding-top: 1.5rem;
+  }
+  .banner-item-row {
+    grid-template: auto auto / 1fr 1fr;
+    max-width: 960px;
+    row-gap: 5rem;
+  }
+}
+
+@media (min-width: 992px) {
   .home-banner {
     padding-top: 3rem;
   }
   .hero-banner {
     font-size: 3.5rem;
   }
-  .banner-item-row {
-    flex-flow: row;
-    column-gap: 2rem;
+  .banner-description {
+    font-size: 1.4rem;
+  }
+  .banner-header {
+    font-size: 2rem;
+  }
+  .banner-overlay {
+    font-size: 1rem;
   }
 }
 
