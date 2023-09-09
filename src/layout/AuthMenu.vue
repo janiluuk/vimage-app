@@ -10,9 +10,17 @@
                 <i class="pi pi-images"></i>
                 <span>My gallery</span>
             </button>
+            <button @click="onTopBarActionButton('/timeline/');" :class="{ 'active-route': checkActiveRoute('/timeline/') }"
+                class="p-link layout-topbar-button">
+                <i class="pi pi-pencil"></i>
+                <span>Studio</span>
+            </button>
 
-
-
+            <button @click="onTopBarActionButton('/documentation/');"
+                :class="{ 'active-route': checkActiveRoute('/documentation/') }" class="p-link layout-topbar-button">
+                <i class="pi pi-question"></i>
+                <span>Documentation</span>
+            </button>
 
             <Menu ref="menu" :model="getOverlayMenu()" :popup="true" />
             <button icon="pi pi-angle-down" :label="user.email" @click="toggleMenu"
@@ -80,6 +88,29 @@ export default {
         },
         getOverlayMenu() {
             return ([
+                {
+                    label: this.$props.user.email,
+                    icon: 'pi pi-user',
+                    to: '/profile/'
+                },
+                {
+                    separator: true
+                },
+                {
+                    label: 'My account',
+                    icon: 'pi pi-wallet',
+                    to: '/profile/'
+                },
+                {
+                    label: 'Chat',
+                    icon: 'pi pi-comments',
+                    to: '/chat'
+                },
+                {
+                    label: 'Settings',
+                    icon: 'pi pi-wrench',
+                    to: '/settings'
+                },
                 {
                     label: 'Logout',
                     icon: 'pi pi-sign-out',

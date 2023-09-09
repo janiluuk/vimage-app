@@ -202,7 +202,17 @@ export default {
                         });
                     }
                 },
-
+                {
+                    label: 'Use as template',
+                    icon: 'pi pi-copy'
+                },
+                {
+                    label: 'Show video information',
+                    icon: 'pi pi-info-circle',
+                    command: (target) => {
+                        this.infodialog = true;
+                    }
+                },
                 {
                     label: 'Download',
                     icon: 'pi pi-download',
