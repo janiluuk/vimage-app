@@ -83,18 +83,6 @@
           </div>
         </div>
       </div>
-      <div class="field col-12 md:col-6 md:mb-2 mb-3">
-                  <label class="mb-1 ms-0 mt-2">Seed</label>
-                  <div class="flex align-items-center justify-content-center">
-                    <div class="field-radiobutton mb-0 mr-3">
-                      <InputSwitch v-model="switchValue" :disabled="isVideoProcessing" />
-                      <label>Randomize</label>
-                    </div>
-                    <InputText type="number" v-model.number="job.seed"
-                      :disabled="isVideoProcessing || switchValue == true">
-                    </InputText>
-                  </div>
-                </div>
     </div>
   </div>
 </template>
@@ -149,22 +137,6 @@ const selectableItems = [
 const isSelected = (itemIndex) => {
   return selectedItems.value.includes(itemIndex);
 };
-const job = ref({
-  prompt: "",
-  negative_prompt: "",
-  prompts: [],
-});
-
-const conflictingItems = {
-  Zoom: "Zoom out",
-  "Zoom out": "Zoom",
-  Up: "Down",
-  Down: "Up",
-  Left: "Right",
-  Right: "Left",
-  "Rotate Clockwise": "Rotate Counter-Clockwise",
-  "Rotate Counter-Clockwise": "Rotate Clockwise",
-};
 
 const handleItemSelect = (itemIndex) => {
   const currentItem = selectableItems[itemIndex].label;
@@ -193,6 +165,23 @@ const isSelectedItemLabel = (label) => {
   return selectedItems.value.some(
     (index) => selectableItems[index].label === label
   );
+};
+
+const job = ref({
+  prompt: "",
+  negative_prompt: "",
+  prompts: [],
+});
+
+const conflictingItems = {
+  Zoom: "Zoom out",
+  "Zoom out": "Zoom",
+  Up: "Down",
+  Down: "Up",
+  Left: "Right",
+  Right: "Left",
+  "Rotate Clockwise": "Rotate Counter-Clockwise",
+  "Rotate Counter-Clockwise": "Rotate Clockwise",
 };
 
 const addPrompt = () => {
