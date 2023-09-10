@@ -283,7 +283,40 @@ export default {
 
     async uploadVideo(blob=false, filename) {
       this.isLoading = true;
+      const getSize = () => this.currentFile.size;
+          const readChunk = (chunkSize, offset) =>
+            new Promise((resolve, reject) => {
+              const filereader = new FileReader();
+              filereader.onload = (event) => {
+                if (event.target.error) {
+                  reject(event.target.error);
+                }
+                resolve(new Uint8Array(event.target.result));
+              }
+              filereader.readAsArrayBuffer(this.currentFile.slice(offset, offset + chunkSize));
+            });
+          MediaInfoFactory().then((mediainfo) => {
+            mediainfo
+              .analyzeData(getSize, readChunk)
+              .then((result) => {
+                this.videoInfo = this.getMediaMetadata(result);
+              
+                if (this.videoInfo && this.videoInfo.duration > 15) {
+                    this.status='error';
+                    this.isLoading = false;
+                    this.errorMessage = "File is too long, maximum 15 seconds allowed!";
+                  return;
+                } 
+              })
+              .catch((error) => {
+                alert(error);
+              });
+          });
+      
+      if (this.status == 'error') return;
+
       let formData = new FormData();
+
       if (blob == false) {
         formData.append("video", this.currentFile);
       } else {
@@ -298,7 +331,7 @@ export default {
             headers: {
               'Content-Type': 'multipart/form-data',
               'Authorization': 'Bearer ' + this.getToken()
-            }
+            }r
           });
         this.videoUrl = response.data.url;
 
