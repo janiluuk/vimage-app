@@ -184,35 +184,6 @@ const conflictingItems = {
   "Rotate Counter-Clockwise": "Rotate Clockwise",
 };
 
-const handleItemSelect = (itemIndex) => {
-  const currentItem = selectableItems[itemIndex].label;
-  const conflictingItem = conflictingItems[currentItem];
-
-  if (currentItem === "None") {
-    selectedItems.value = [0];
-  } else {
-    if (isSelectedItemLabel("None")) {
-      selectedItems.value = selectedItems.value.filter(
-        (index) => selectableItems[index].label !== "None"
-      );
-    }
-    if (conflictingItem && isSelectedItemLabel(conflictingItem)) {
-      selectedItems.value = selectedItems.value.filter(
-        (index) => selectableItems[index].label !== conflictingItem
-      );
-    }
-    selectedItems.value = isSelectedItemLabel(currentItem)
-      ? selectedItems.value.filter((index) => index !== itemIndex)
-      : [...selectedItems.value, itemIndex];
-  }
-};
-
-const isSelectedItemLabel = (label) => {
-  return selectedItems.value.some(
-    (index) => selectableItems[index].label === label
-  );
-};
-
 const addPrompt = () => {
   lastPromptTime.value = lastPromptTime.value + 3;
   const promptTime = {
