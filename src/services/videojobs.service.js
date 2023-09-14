@@ -52,7 +52,7 @@ export default {
     };
 
     return axios
-      .post(`${url}/video-jobs?include=modelfile,user`, payload, options)
+      .post(`${url}/video-jobs?filter[generator]=vid2vid&include=modelfile,user`, payload, options)
       .then((response) => {
         return jsona.deserialize(response.data);
       });

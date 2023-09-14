@@ -47,6 +47,20 @@ export default {
                 to: '/library#/preview'
             }
         ],
+        generatorOptions: [
+            {
+                label: 'All',
+                value: '',
+            },
+            {
+                label: 'Video to Video',
+                value: 'vid2vid',
+            },
+            {
+                label: 'Picture to Video',
+                value: 'deforum'
+            }
+        ],
         query: "",
         total: 0,
     }),
