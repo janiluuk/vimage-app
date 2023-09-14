@@ -7,38 +7,36 @@
 
                 <!-- progress box start -->
                 <label v-if="!isJobReady && !isJobSketch" class="form-label mb-1">Preview</label>
-                    <label v-if="isJobReady" class="form-label mb-1 text-primary"><i class="pi pi-check"></i>Completed
-                        video. Job duration {{ getFormattedDuration(job.job_time) }}</label>
+                <label v-if="isJobReady" class="form-label mb-1 text-primary"><i class="pi pi-check"></i>Completed
+                    video. Job duration {{ getFormattedDuration(job.job_time) }}</label>
                 <div class="img-with-overlay mt-1"
                     v-if="!isJobReady && (isJobApproved || isVideoProcessing || hasPreviewAnimation || hasPreviewImage)">
-                    
+
                     <Image crossorigin="anonymous"
                         :style="{ filter: isVideoProcessing ? 'blur(' + (50 - ((1 + job.progress))) + 'px)' : '' }"
                         v-if="hasPreviewAnimation && (job.operation == 'animation' || (job.operation == 'preview' && !hasPreviewImage))"
-                        class="w-100 preview-100 text-center img-with-blur"
-                        :src="job.preview_animation" @error="imageLoadOnError"
-                        v-bind:alt="animation" preview />
+                        class="w-100 preview-100 text-center img-with-blur" :src="getPreviewAnimation"
+                        @error="imageLoadOnError" v-bind:alt="animation" preview />
                     <Image crossorigin="anonymous"
                         :style="{ filter: isVideoProcessing ? 'blur(' + (50 - ((1 + job.progress))) + 'px)' : '' }"
                         v-if="hasPreviewImage && (job.operation != 'animation' || (job.operation == 'animation' && !hasPreviewAnimation))"
-                        class="w-100 preview-100 img-with-blur"
-                        :src="job.preview_img" @error="imageLoadOnError"
+                        class="w-100 preview-100 img-with-blur" :src="getPreviewImage" @error="imageLoadOnError"
                         v-bind:alt="pic" preview />
                     <VideoEditProgress :job="job"></VideoEditProgress>
                 </div>
                 <!-- preview box end-->
 
+
                 <div class="text-center position-relative w-100 mt-1" v-if="isJobReady">
                     <vue-plyr :options="options">
-                        <video controls crossorigin="anonymous" playsinline
-                            :data-poster="job.preview_img">
+                        <video controls crossorigin="anonymous" playsinline :data-poster="job.preview_img">
                             <source size="720" crossorigin="anonymous" :src="job.url" type="video/mp4" />
                         </video>
                     </vue-plyr>
 
                     <!-- Original video -->
                 </div>
-                <div v-if="job.status == 'pending' || (!hasPreviewAnimation && !hasPreviewImage)"
+                <div v-if="job.status == 'pending'"
                     class="video-preview-container mb-3">
                     <div v-if="job.generator == 'vid2vid'">
                         <label class="form-label">Original video</label>
@@ -50,15 +48,14 @@
                     </div>
 
                     <div v-else-if="job.generator == 'deforum'" class="preview-100 mt-1">
-                        
+
                         <label class="form-label">Original image</label>
                         <div class="preview-100 mt-1">
-                            <Image crossorigin="anonymous" 
-                        :src="job.original_url" @error="imageLoadOnError"
-                        v-bind:alt="pic" class="preview-100" preview />
+                            <Image crossorigin="anonymous" :src="job.original_url" @error="imageLoadOnError"
+                                v-bind:alt="pic" class="preview-100" preview />
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -119,15 +116,47 @@ export default {
             return false;
         },
         hasPreviewImage() {
-            return (!this.isJobSketch && this.$props.job.preview_img && this.$props.job.preview_img.length > 0 && (this.$props.job.preview_img.includes('.png') || this.$props.job.preview_img.includes('.gif')));
+            var url = this.$props.job.preview_img;
+            var mediaUrl = this.$props.job.media?.preview?.url;
+            if (mediaUrl) {
+                url = mediaUrl;
+            }
+
+            return (this.$props.job.status != 'pending' && url && url.length > 0 && (url.includes('.png') || url.includes('.gif')));
+        },
+        hasPreviewAnimation() {
+            var url = this.$props.job.preview_animation;
+            var mediaUrl = this.$props.job.media?.animation?.url;
+            if (mediaUrl) {
+                url = mediaUrl;
+            }
+
+            return (this.$props.job.status != 'pending' && url && url.length > 0 && (url.includes('.png') || url.includes('.gif')));
         },
         getPreviewUrl() {
             return this.$props.job.original_url.replace("https://api.dudeisland.eu", "");
         },
-        hasPreviewAnimation() {
-            return (!this.isJobSketch && this.$props.job.preview_animation && this.$props.job.preview_animation.length > 0);
+        getPreviewImage() {
+            if (this.hasPreviewImage) {
+                var url = this.$props.job.media?.preview?.url;
+                if (url) {
+                    return url;
+                }
+                return this.$props.job.preview_img;
+            }
+            return false;
         },
+        getPreviewAnimation() {
+            if (this.hasPreviewAnimation) {
 
+                var url = this.$props.job.media?.animation?.url;
+                if (url) {
+                    return url;
+                }
+                return this.$props.job.preview_animation;
+            }
+            return false;
+        },
 
     },
     methods: {

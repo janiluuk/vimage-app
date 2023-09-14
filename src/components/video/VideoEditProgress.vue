@@ -19,9 +19,11 @@
             <p v-if="isJobApproved" class="mt-2 mb-0 text-xs text-primary text-center">
                 Waiting
                 for
-                a worker to pick the job up....</p>
+                a worker to pick the job up....  {{  job.queue }}</p>
+        
+
         </div>
-        <p v-if="(hasPreviewImage || hasPreviewAnimation) && progressAmount > 0"
+        <p v-if="(hasPreviewImage || hasPreviewAnimation) || progressAmount > 0"
             class="mt-1 mb-0 text-xs text-primary text-center"><span class="text-xs">{{
                 timeElapsedFormatted }} elapsed</span>
         </p>
@@ -94,13 +96,25 @@ export default {
             return this.$props.job.status.includes('processing');
         },
         progressAmount() {
-            return this.$props.job.progress >= 0 ? this.$props.job.progress : this.progress;
+            return this.$props.job.progress > 0 ? this.$props.job.progress : this.progress;
         },
         hasPreviewImage() {
-            return (this.$props.job.status != 'pending' && this.$props.job.preview_img && this.$props.job.preview_img.length > 0 && (this.$props.job.preview_img.includes('.png') || this.$props.job.preview_img.includes('.gif')));
+            var url = this.$props.job.preview_img;
+            var mediaUrl = this.$props.job.media?.preview?.url;
+            if (mediaUrl) {
+                 url = mediaUrl;
+            }
+
+            return (this.$props.job.status != 'pending' && url && url.length> 0 && (url.includes('.png') || url.includes('.gif')));
         },
         hasPreviewAnimation() {
-            return (this.$props.job.status != 'pending' && this.$props.job.preview_animation && this.$props.job.preview_animation.length > 0);
+            var url = this.$props.job.preview_animation;
+            var mediaUrl = this.$props.job.media?.animation?.url;
+            if (mediaUrl) {
+                 url = mediaUrl;
+            }
+
+            return (this.$props.job.status != 'pending' && url && url.length> 0 && (url.includes('.png') || url.includes('.gif')));
         },
         currentTime() {
             return Math.floor(new Date(Date.now()).getTime() / 1000);
@@ -112,12 +126,15 @@ export default {
     },
     methods: {
         updateProgress() {
+            if (this.$props.job.progress > 0 && this.$props.job.progress != this.progress) {
+                this.progress = this.$props.job.progress;
+            }
             if (this.$props.job.job_time > 0 && this.$props.job.job_time > this.processTime) {
                 this.processTime = this.$props.job.job_time+1;
             } else {
                 this.processTime++;
             }
-            if (this.$props.job.estimated_time_left >= 0 && (this.last_timeleft !== this.$props.job.estimated_time_left || this.timeleft == 0)) {
+            if (this.$props.job.estimated_time_left >= 0 && (this.last_timeleft !== this.$props.job.estimated_time_left || this.timeleft <= 0)) {
                 this.last_timeleft = this.$props.job.estimated_time_left;
                 this.timeleft = this.$props.job.estimated_time_left;
             } else {
