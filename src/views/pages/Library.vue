@@ -106,9 +106,9 @@ const generatorOptions = ref([
 ]);
 const statusOptions = ref([
     { label: 'All', value: false },
-    { label: 'Finished', value: ['finished'] },
-    { label: 'In the works', value: ['preview', 'processing','cancelled', 'approved']  },
-    { label: 'Failed', value: ['error'] }
+    { label: 'Finished', value: 'finished' },
+    { label: 'In the works', value: 'intheworks'},
+    { label: 'Failed', value: 'error'}
 
 ]);
 
@@ -135,7 +135,7 @@ const getJobList = () => {
         ...(sortField.value ? { sort: sortField.value } : {}),
     };
     store.dispatch("videojobs/list", params).then(() => {
-        if (generatorFilter.value && generatorFilter.value != "") {
+        if (generatorFilter.value && generatorFilter.value != "" || statusFilter.value != "" || queryFilter.value != "") {
             dataviewValue.value = store.getters["videojobs/filterList"](queryFilter.value, statusFilter.value, generatorFilter.value);
 
         } else {
@@ -245,19 +245,25 @@ const onQueryFilterChange = (event) => {
     const value = event.target.value;
     queryFilterKey.value = event.target.value;
     queryFilter.value = value;
+    dataviewValue.value = store.getters["videojobs/filterList"](queryFilter.value, statusFilter.value, generatorFilter.value);
+
 };
 
 const onGeneratorFilterChange = (event) => {
     const value = event.value.value;
     generatorFilterKey.value = event.value;
     generatorFilter.value = value;
+    dataviewValue.value = store.getters["videojobs/filterList"](queryFilter.value, statusFilter.value, generatorFilter.value);
+
+
 };
 
 const onStatusFilterChange = (event) => {
     const value = event.value.value;
-
     statusFilter.value = value;
     statusFilterKey.value = event.value;
+    dataviewValue.value = store.getters["videojobs/filterList"](queryFilter.value, statusFilter.value, generatorFilter.value);
+
 };
 </script>
 

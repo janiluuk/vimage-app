@@ -148,7 +148,7 @@ export const videojobs = {
       );
     },
 
-    filterList: (state, getters) => (query=false, status=[], generator=false) => {
+    filterList: (state, getters) => (query=false, status=false, generator=false) => {
       var list = state.list;
       if (list.length <1) return [];
 
@@ -160,10 +160,19 @@ export const videojobs = {
           );
         });
       }
-      
-      if (status.length > 0) {
+      if (status && status.length > 0) {
+        let statusFilter = [];
+        if (status == 'intheworks') {
+          statusFilter = ['preview', 'processing','cancelled', 'approved']
+        }
+        if (status == 'finished') {
+            statusFilter = ['finished']
+        }
+        if (status == 'error') {
+            statusFilter = ['error']
+        }
         list = list.filter((job) => {
-          return status.includes(job.status.toLowerCase());
+          return statusFilter.includes(job.status.toLowerCase());
         });
       }
 
