@@ -1,40 +1,49 @@
 <template>
-    <div class="grid p-fluid">
         <div class="col-12">
+                <Menubar :model="menuOptions">
+                    <template #start>
+                        <Dropdown v-model="pagination.perPage" name="pages">
+                            <option v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">
+                                {{ item }}
+                            </option>
+                        </Dropdown>
+                    </template>
+                    <template #end>
 
-            <Menubar :model="menuOptions">
-                <template #end>
-
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText type="text" v-model="query" :placeholder="query ? query : 'Search ...'"
-                            placeholder="Search" />
-                    </span>
-                </template>
-            </Menubar>
-        </div>
-
-    </div>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search" />
+                            <InputText type="text" v-model="query"  :placeholder="query ? query : 'Search ...'" placeholder="Search" />
+                        </span>
+                    </template>
+                </Menubar>
+            </div>
 </template>
 <script>
 /* eslint-disable */
 export default {
-    name: "VideoLibraryTabsToolbar",
+    name: "VideoLibraryToolbar",
     data: () => ({
-
+        pagination: {
+            perPage: 5,
+            currentPage: 1,
+            perPageOptions: [5, 10, 25, 50],
+        },
         menuOptions: [
             {
-                label: 'All projects',
-                to: '/library',
-                class: 'p-highlight'
+                label: 'All',
+                to: '/library'
             },
             {
-                label: 'Finished projects',
-                to: '/library/#finished'
+                label: 'Finished',
+                to: '/library#/finished'
             },
             {
-                label: 'Unfinished projects',
-                to: '/library/#preview'
+                label: 'Original',
+                to: '/library#/original'
+            },
+            {
+                label: 'Unfinished',
+                to: '/library#/preview'
             }
         ],
         generatorOptions: [
@@ -52,10 +61,14 @@ export default {
             }
         ],
         query: "",
-
+        total: 0,
     }),
     watch: {
         query: {
+            handler: "getListDebounced",
+            immediate: true,
+        },
+        pagination: {
             handler: "getListDebounced",
             immediate: true,
         }
@@ -91,6 +104,8 @@ export default {
                 this.collection = this.$store.getters["videojobs/list"];
                 this.total = this.$store.getters["videojobs/listTotal"];
             });
+        setPagination(pagination) {
+            this.$emit.change - pagination(pagination);
         },
     }
 };
