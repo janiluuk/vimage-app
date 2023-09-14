@@ -40,8 +40,13 @@
                   <label class="mb-1 ms-0 mt-2">Negative Prompt</label>
                   <Textarea rows="2" autoResize placeholder="Type your negative prompt here" v-model="job.negative_prompt"
                     :disabled="isVideoProcessing || isJobReady"></Textarea>
-                </div>
 
+                </div>
+                
+                <div class="field col-12 md:col-6 md:mb-2 mb-3 mt-5">
+                  <Slider v-model="job.finallength" :min="4" :max="20" :step="1.0"/>
+                  <label class="mb-1 ms-0 mt-2">Length:{{ job.finallength }} seconds</label>
+                </div>
                 <!----<div class="field col-12 md:col-6 md:mb-2 mb-3">
                   <label class="mb-1 ms-0 mt-2" :style="{ color: denoisingColor }">Strength: {{ denoisingText
                   }} <div class="help-btn" @click="toggleOverlay"><i class="fa fa-question"></i></div></label>
@@ -58,12 +63,16 @@
                   <Slider v-model="controlnet[1].weight" :min="0.2" :max="1.5" :step="0.025"/>
               
                 </div> -->
+                <p></p>
+                <div class="field col-12">
+
                 <h3>Camera movement</h3>
                 <div class="horizontal-select mt-2 pt-1 pb-1">
                   <div v-for="(item, itemIndex) in selectableItems" :key="itemIndex" class="selectable-item"
                     :class="{ selected: isSelected(itemIndex) }" @click="handleItemSelect(itemIndex)">
                     {{ item.label }}
                   </div>
+                </div>
                 </div>
                 <!-- <div class="field col-12 md:col-6 md:mb-2 mb-3">
                   <label class="mb-1 ms-0 mt-2">Seed</label>
@@ -127,13 +136,14 @@ export default {
       switchValue: false,
       formChanged: false,
       interval: false,
-      selectedItems: [],
+      selectedItems: [0, 'Zoom'],
 
       job: {
         status: null,
         model_id: 0,
         operation: 'preview',
         preset: 'zoom',
+        finallength: 4,
         cfg_scale: 7,
         progress: 1,
         estimated_time_left: 0,
@@ -289,7 +299,7 @@ export default {
         prompt: this.job.prompt,
         negative_prompt: this.job.negative_prompt,
         videoId: this.videoId,
-        length: this.job.length
+        length: this.job.length ? this.job.length : this.job.finallength
       };
     }
   },
