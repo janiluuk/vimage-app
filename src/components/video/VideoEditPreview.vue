@@ -22,6 +22,14 @@
                         v-if="hasPreviewImage && (job.operation != 'animation' || (job.operation == 'animation' && !hasPreviewAnimation))"
                         class="w-100 preview-100 img-with-blur" :src="getPreviewImage" @error="imageLoadOnError"
                         v-bind:alt="pic" preview />
+                        <div v-if="!isJobReady && job.generator == 'deforum'" class="preview-100 mt-1">
+
+<label class="form-label">Original image</label>
+<div class="preview-100 mt-1">
+    <Image crossorigin="anonymous" :src="job.original_url" @error="imageLoadOnError"
+        v-bind:alt="pic" class="preview-100" preview />
+</div>
+</div>
                     <VideoEditProgress :job="job"></VideoEditProgress>
                 </div>
                 <!-- preview box end-->
@@ -36,6 +44,7 @@
 
                     <!-- Original video -->
                 </div>
+
                 <div v-if="job.status == 'pending'"
                     class="video-preview-container mb-3">
                     <div v-if="job.generator == 'vid2vid'">
@@ -47,14 +56,7 @@
                         </div>
                     </div>
 
-                    <div v-else-if="job.generator == 'deforum'" class="preview-100 mt-1">
 
-                        <label class="form-label">Original image</label>
-                        <div class="preview-100 mt-1">
-                            <Image crossorigin="anonymous" :src="job.original_url" @error="imageLoadOnError"
-                                v-bind:alt="pic" class="preview-100" preview />
-                        </div>
-                    </div>
 
                 </div>
             </div>
