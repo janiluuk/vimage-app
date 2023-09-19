@@ -23,9 +23,8 @@
                         v-if="hasPreviewImage && (job.operation != 'animation' || (job.operation == 'animation' && !hasPreviewAnimation))"
                         class="w-100 preview-100 img-with-blur"
                         :src="job.preview_img ? job.preview_img.replace('https://api.dudeisland.eu', '') : ''" @error="imageLoadOnError"
-
-                    <div class="img-with-overlay mt-1"
-                    v-if="!isJobReady || (isJobApproved || isVideoProcessing || hasPreviewAnimation || hasPreviewImage || job.generator == 'deforum')">
+                    />
+                    <div class="img-with-overlay mt-1" v-if="!isJobReady || (isJobApproved || isVideoProcessing || hasPreviewAnimation || hasPreviewImage || job.generator == 'deforum')">
 
                     <Image crossorigin="anonymous"
                         :style="{ filter: isVideoProcessing ? 'blur(' + (50 - ((1 + job.progress))) + 'px)' : '' }"
@@ -51,25 +50,15 @@
 
                 <div class="text-center position-relative w-100 mt-1" v-if="isJobReady">
                     <vue-plyr :options="options">
-<<<<<<< HEAD
-                        <video controls crossorigin="anonymous" playsinline
-                            :data-poster="job.preview_img.replace('https://api.dudeisland.eu', '')">
-=======
                         <video controls crossorigin="anonymous" playsinline :data-poster="job.preview_img ? job.preview_img.replace('https://api.dudeisland.eu', '') : ''">
->>>>>>> c7e57d1 (Fixes)
                             <source size="720" crossorigin="anonymous" :src="job.url" type="video/mp4" />
                         </video>
                     </vue-plyr>
 
                     <!-- Original video -->
                 </div>
-<<<<<<< HEAD
-
-                <div v-if="job.status == 'pending' || showOriginal == true"
-=======
                 
                 <div v-if="job.status == 'pending' || (!hasPreviewAnimation && !hasPreviewImage) || showOriginal"
->>>>>>> c7e57d1 (Fixes)
                     class="video-preview-container mb-3">
                     <div v-if="job.generator == 'vid2vid'">
                         <label class="form-label">Original video</label>
@@ -79,9 +68,6 @@
                             </video>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
