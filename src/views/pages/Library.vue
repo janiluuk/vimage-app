@@ -266,7 +266,7 @@ const onStatusFilterChange = (event) => {
 
 <template>
     <div class="floating-button"><a href="/upload/">
-            <Button icon="pi pi-upload" label="Video"
+            <Button icon="pi pi-plus" label="Create!"
                 class="p-button p-component bg-gradient-vibrant p-button-lg p-button-rounded p-button-success"></Button>
         </a>
     </div>

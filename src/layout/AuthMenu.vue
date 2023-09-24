@@ -2,7 +2,7 @@
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
             <button @click="onTopBarActionButton('/upload/');" :class="{ 'active-route': checkActiveRoute('/upload/') }"
                 class="p-link topbar-button">
-                <i class="pi pi-upload mr-2"></i>
+                <i class="pi pi-plus mr-2"></i>
                 <span>Create!</span>
             </button>
             <button @click="onTopBarActionButton('/library/');" :class="{ 'active-route': checkActiveRoute('/library/') }"
