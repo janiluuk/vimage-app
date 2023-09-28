@@ -303,7 +303,7 @@ export default {
         prompt: this.job.prompt,
         negative_prompt: this.job.negative_prompt,
         videoId: this.videoId,
-        length: this.job.length ? this.job.length : this.job.finallength
+        length: this.job.finallength ? this.job.finallength : this.job.length
       };
     }
   },
