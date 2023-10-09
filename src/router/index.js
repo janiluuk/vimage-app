@@ -24,7 +24,7 @@ const router = createRouter({
         {
           path: '/',
           name: 'Dashboard',
-          component: () => import('@/views/Dashboard.vue')
+          component: () => import('@/views/pages/video/Upload.vue')
         },
         {
           path: '/frontpage',
