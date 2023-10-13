@@ -1,5 +1,6 @@
 <template>
-    <div v-for="notification in notifications">
+  <Toast></Toast>
+    <div v-for="notification in notes">
       <Notification
         :key="notification.id"
         :notification="notification"
@@ -18,7 +19,7 @@ export default {
   components: { Notification },
   computed: {
     ...mapGetters('notification', {
-      notifications: notificationGetters.GET_NOTIFICATIONS
+      notes: notificationGetters.GET_NOTIFICATIONS
     })
   }
 };

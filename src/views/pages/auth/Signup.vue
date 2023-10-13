@@ -1,10 +1,14 @@
 <template>
+
     <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
         <div class="flex flex-column align-items-center justify-content-center">
-            <img :src="logoUrl" alt="Vimage LogoS" class="mb-5 w-6rem flex-shrink-0" />
+          <NotificationsComponent></NotificationsComponent>
+  
+          <img :src="logoUrl" alt="Vimage LogoS" class="mb-5 w-6rem flex-shrink-0" />
             <div
                 style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
                 <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
+
                     <div class="text-center mb-5">
                         <img src="/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3" />
                         <div class="text-900 text-3xl font-medium mb-3">Welcome!</div>
@@ -16,11 +20,6 @@
                     </div>
                     <Form role="form" @submit.prevent="onRegister">
                         <div>
-
-                            <label for="username" class="block text-900 text-xl font-medium mb-2">Username</label>
-
-                            <InputText id="username" type="text" name="username" :validateOnBlur="false" v-model="v$.registerData.login.$model"
-                                placeholder="Username" class="w-full md:w-30rem mb-5" style="padding: 1rem" />
 
                             <label for="email" class="block text-900 text-xl font-medium mb-2">E-mail</label>
 
@@ -66,6 +65,8 @@ import { useLayout } from '@/layout/composables/layout';
 import { required, sameAs, minLength, email } from  '@vuelidate/validators';
 import useVuelidate from "@vuelidate/core";
 import { mapActions } from 'vuex';
+import NotificationsComponent from '@/components/notification/NotificationsComponent.vue';
+
 import * as authActions from '@/store/modules/auth/types/actions';
 import * as notificationActions from '@/store/modules/notification/types/actions';
 const { layoutConfig } = useLayout();
@@ -76,12 +77,10 @@ export default {
   data() {
     return {
         
-      clickedLogin: false,
       clickedEmail: false,
       clickedPassword: false,
       clickedConfirmationPassword: false,
       registerData: {
-        login: '',
         email: '',
         password: '',
         password_confirmation: '',
@@ -94,14 +93,11 @@ export default {
         return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
     }
   },
+  components: { NotificationsComponent },
 
   validations () {
     return {
     registerData: {
-      login: {
-        required,
-        minLength: minLength(3)
-      },
       email: {
         required,
         email
@@ -128,9 +124,6 @@ export default {
       setErrorNotification: notificationActions.SET_ERROR_NOTIFICATION
     }),
 
-    clickLogin() {
-      this.clickedLogin = true;
-    },
     clickEmail() {
       this.clickedEmail = true;
     },
@@ -142,7 +135,6 @@ export default {
     },
     validationRegisterForm() {
       this.v$.$touch();
-      console.log(this.v$);
       return this.v$.$invalid;
     },
     async onRegister() {
@@ -154,16 +146,18 @@ export default {
           const isRegisterSuccessful = await this.registerUser(
             this.registerData
           );
-            console.log(isRegisterSuccessful);
           if (isRegisterSuccessful !== false) {
             await this.$router.push({
               name: 'verification',
               query: { id: isRegisterSuccessful.id }
             });
+          } else {
           }
         } catch (error) {
-          this.setErrorNotification(error);
         }
+      } else {
+        this.setErrorNotification("Validation failed!");
+
       }
     }
   }

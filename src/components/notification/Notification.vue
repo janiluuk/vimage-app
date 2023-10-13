@@ -1,5 +1,7 @@
 <template>
+  <div>
     {{  $props.notification.showing == true ? this.showNotification($props.notification.text, $props.notification.detail, $props.notification.severity, $props.notification.id) : "" }} 
+  </div>
 </template>
 
 <script>
@@ -35,7 +37,6 @@ export default {
       removeErrorNotification: notificationActions.REMOVE_ERROR_NOTIFICATION,
     }),
     showNotification(summary, detail="", severity="info", id) {
-      
       this.toast.add({ severity: severity, summary: summary, detail: detail, life: 3000});
       this.removeErrorNotification(id);
     },
