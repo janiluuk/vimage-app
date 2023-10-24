@@ -10,10 +10,10 @@ export default {
     } catch (error) {
       dispatch(
         'notification/' + notificationActions.SET_ERROR_NOTIFICATION,
-        error,
+        error.message,
         { root: true }
       );
-      return false;
+      throw error;
     }
   },
   [actions.VERIFIED_EMAIL]: async ({ dispatch }, verifiedEmailData) => {

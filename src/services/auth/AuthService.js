@@ -1,9 +1,13 @@
 import requestService from '@/services/request-service/ApiRequestService';
+import { Exception } from 'sass';
 
 const AuthService = {
   async registerUser(registerData) {
-    const response = await requestService.post('/auth/register', registerData);
+    const response = await requestService.post('/auth/register', registerData).catch(function(error) {
+      throw new Error(error);
+    })
     return response?.data;
+    
   },
   async verifiedEmail(verifiedEmailData) {
     const response = await requestService.post(
