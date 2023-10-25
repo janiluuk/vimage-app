@@ -1,15 +1,13 @@
 <template>
   <div class="home-banner">
     <div class="text-center">
-      <div class="hero-banner">What do you like to create today?</div>
+      <div class="hero-banner">Upload your image below to start!</div>
       <div class="banner-item-row">
       <div class="banner-item" v-on:drop="uploadHandler($event, 'deforum')" v-on:dragover.prevent>
         <input class="file-input" type="file" accept="image/*" @change="uploadHandler($event, 'deforum')">
         <div class="banner-media-container">
-          <img src="/public/img/mona.gif" class="banner-media-main"/>
-          <div class="banner-media-secondary">
-            <img src="/public/img/mona2.gif" />
-          </div>
+          <img src="/public/img/mona.gif" class="banner-media-main" style="max-width:960px;"/>
+
           <div class="banner-overlay">
             <div class="banner-overlay-icon">
               <i class="pi pi-upload"></i>
@@ -161,10 +159,10 @@ export default {
 
 .banner-item-row {
   width: 100%;
-  max-width: 576px;
+  max-width: 700px;
   margin: 3rem auto 5rem auto;
   display: grid;
-  grid-template: 1fr / fit-content(100%);
+  grid-template-columns: 1fr;
   align-items: self-start;
   justify-content: center;
   flex-flow: column;
@@ -174,6 +172,7 @@ export default {
 
 .banner-item {
   position: relative;
+  cursor: pointer;
 
   &.coming-soon {
     display: flex;
@@ -280,7 +279,7 @@ export default {
 }
 
 .banner-overlay-desc {
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 @keyframes slide {
@@ -312,11 +311,6 @@ export default {
   }
   .home-banner {
     padding-top: 1.5rem;
-  }
-  .banner-item-row {
-    grid-template: auto auto / 1fr 1fr;
-    max-width: 960px;
-    row-gap: 5rem;
   }
 }
 

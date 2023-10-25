@@ -1,5 +1,5 @@
 <template>
-    <Toolbar class="video-edit-toolbar p-toolbar p-2 mb-3">
+    <Toolbar class="video-edit-toolbar p-toolbar p-2 ml-3 mb-3">
         <template v-slot:start>
             <!-- <Menu :popup="true" :model="getMenu()" ref="menu" />
             <Button class="p-button-plain p-button-text mr-2" icon="pi pi-bars" label="Options"
@@ -29,7 +29,7 @@
                         @click="downloadItem()" label="Download video"
                          :disabled="isVideoProcessing || !isJobReady" />
                         <Button v-if="!isVideoProcessing && !isJobReady" class="bg-gradient-vibrant p-button-primary mb-0"
-                        @click="$emit('submit:finalize')" label="Finalize Video"
+                        @click="$emit('submit:finalize')" label="Generate Video"
                         :loading="isVideoProcessing && job.operation == 'finalize'" :disabled="isVideoProcessing || isJobReady" />
                     <Button icon="pi pi-times-circle" v-if="isVideoProcessing"
                         class="p-button-outlined p-button-warning mb-0" :label="cancelButtonValue"
@@ -137,7 +137,7 @@ export default {
                 return "Cancel animation generation";
             }
             if (this.$props.job.operation == "finalize") {
-                return "Cancel finalization";
+                return "Cancel job";
             }
             return "Cancel job";
         }
