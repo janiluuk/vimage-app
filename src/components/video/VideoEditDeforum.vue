@@ -10,7 +10,7 @@
     <div class="editor" v-if="job.status != null">
       <!-- Main settings container -->
       <Splitter class="mb-5 editor-container">
-        <SplitterPanel :size="30" :minSize="10" class="mw-0">
+        <SplitterPanel :size="30" :minSize="10" :gutterSize=0 class="mw-0">
           <VideoEditPreview :job="job" />
         </SplitterPanel>
         <SplitterPanel :size="70" :minSize="40" class="mw-0">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="field col-12 md:mb-2 mb-3">
                   <h5 class="mb-2" style="font-weight: bold; color:#89610b; line-height: 1.2;">
-                    Click the 'Generate Video' button to produce a Halloween-themed horror animation, or craft your own prompt. The animation will have a duration of 2 seconds.
+                    Click the 'Generate Video' button to produce a Halloween-themed horror animation, or craft your own prompt.
                   </h5>
                   <div class="zoom p-error p-danger">{{ validation.firstError('job.prompt') }}</div>
                   <label class="mb-1 ms-0">Prompt</label>
@@ -106,11 +106,11 @@
             @submit:overlay="toggleFullscreenOverlay" @submit:preview="handlePreviewSubmit"
             @submit:finalize="handleFinalizeJob" />
           
-      <div >
-        <div class="soft-message ml-3">
+      <div v-if="isVideoProcessing">
+        <div class="soft-message ml-3" style="background-color: #3b5b72">
           <div class="p-3">
-            <div class="mb-1">
-              Due to high demand, there may be extended wait times. Feel free to leave this page and return later; your content will be available in your library once completed.
+            <div class="mb-1" >
+              Due to high demand, there may be extended wait times. Feel free to leave this page and return later; your content will be available in your <a href="/library/">library </a>once completed.
             </div>
 
 <div class="field-checkbox mb-0">

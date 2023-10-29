@@ -48,9 +48,9 @@ axios.interceptors.response.use(
 const requestService = {
   get(url, params = {}, headers = {}, noMerge=false) {
     var options = {};
-    if (noMerge=true) options = params;
+    if (noMerge==true) options = params;
     else {
-      options = {params, $headers }
+      options = {params, headers }
     }
     return axios.get(API_URL + url, options);
   },

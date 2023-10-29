@@ -19,13 +19,18 @@ export default {
       setErrorNotification: notificationActions.SET_ERROR_NOTIFICATION
     }),
     async loginUser() {
+
+      
       await this.login({
         code: this.$route.query.code,
+        scope: this.$route.query.scope,
+        authuser: this.$route.query.authuser,
         provider: this.provider
       });
+
       await this.fetchLoggedUser();
 
-      await this.$router.push({ name: 'Index' });
+      await this.$router.push({ name: 'Library' });
     }
   },
   mounted() {

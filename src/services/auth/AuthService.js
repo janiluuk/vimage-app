@@ -105,6 +105,7 @@ const AuthService = {
       '/' + providerName + '/callback',
       data
     );
+
     this.saveToken(response?.data?.data.accessToken);
 
     return response?.data?.data;

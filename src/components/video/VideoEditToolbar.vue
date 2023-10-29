@@ -149,7 +149,8 @@ export default {
             destroy: 'videojobs/destroy',
         }),
         downloadItem() {
-            this.toast.add({ severity: 'info', summary: 'Downloading', detail: 'Download started for '+this.$props.job.original_filename, life: 3000 });
+            let file = this.$props.job.original_filename.substr(0, this.$props.job.original_filename.lastIndexOf(".")) + ".mp4";
+            this.toast.add({ severity: 'info', summary: 'Downloading', detail: 'Download started for '+file, life: 3000 });
             this.download(this.$props.job);
         },
         openInfoDialog() {

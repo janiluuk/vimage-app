@@ -38,13 +38,14 @@
 
                             <div class="col-12 md:col-8">
 
-                                <div class="field-checkbox mb-5">
+                              <!---  <div class="field-checkbox mb-5">
                                     <Checkbox name="checkbox" value="true" :binary="true" v-model="registerData.license" />
 
                                     <label for="checkbox"> I agree the
                                         <a href="#" class="text-dark font-weight-bolder"> Terms and
                                             Conditions</a></label> 
                                 </div>
+                              -->                              
                             </div>
 
                             <Button type="submit" label="Register"

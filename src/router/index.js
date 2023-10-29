@@ -13,6 +13,7 @@ import ForgotPassword from "@/views/pages/auth/ForgotPassword.vue";
 import PasswordReset from "@/views/api/PasswordReset.vue";
 import { ConnectableObservable } from "rxjs";
 import DeforumUI from "@/views/dev/DeforumUI.vue";
+import SocialiteAuth from '@/views/SocialiteAuth.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -248,6 +249,14 @@ const router = createRouter({
 
       component: Signup,
     },
+    {
+      path: '/:provider/callback',
+      name: 'Provider',
+      component: SocialiteAuth,
+      props: true,
+      meta: { handleAuth: true }
+    },
+
     {
       path: "/verification",
       name: "verification",
