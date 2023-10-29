@@ -14,7 +14,7 @@
             <button icon="pi pi-angle-down" :label="user.email" @click="toggleMenu"
                 :class="{ 'active-route': checkActiveRoute('/profile/') }" class="p-link topbar-button">
                 <i class="pi pi-user mr-2"></i>
-                <span>Account</span>
+                <span>{{ user.email }}</span>
 
             </button>
         </div>
@@ -76,12 +76,11 @@ export default {
         getOverlayMenu() {
             return ([
                 {
-                    label: 'Logout',
+                    label: 'Logout ',
                     icon: 'pi pi-sign-out',
                     command: () => {
                         this.exit();
-                        this.signOut();
-                        toast.add({ severity: 'info', summary: 'CYA!', detail: 'You have been logged out.' });
+
                     }
                 }
 
@@ -101,7 +100,10 @@ export default {
         async exit() {
             try {
                 await this.signOut();
-                alert("signed out");
+                this.setErrorNotification("Byebye");
+
+                this.$router.push("/login");
+
             } catch (error) {
                 this.setErrorNotification(error);
             }

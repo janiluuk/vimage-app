@@ -128,6 +128,7 @@ export default {
   },
   [actions.PROVIDER_CALLBACK]: async ({ dispatch }, loginData) => {
     try {
+console.log(loginData);
       await AuthService.signInByProviderCallback(loginData.provider, loginData);
     } catch (error) {
       dispatch(

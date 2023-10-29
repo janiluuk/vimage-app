@@ -5,8 +5,21 @@ import { useToast } from 'primevue/usetoast';
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import { ImageViewer } from 'vue-previewable-image'
+import { CustomViewerTitle, ViewerSwitchEvent } from 'vue-previewable-image'
 
+const viewerTitle = (img, { index, total }) => {
+  console.log('img:', img)
+  return `${img.alt} (${index + 1}/${total})`
+}
 
+const handleSwitch = (index, viewer) => {
+  console.log('on switch:', index, viewer)
+}
+
+const currentIndex = ref(0);
+
+const showViewer = ref(false);
 const toast = useToast();
 const confirmPopup = useConfirm();
 const destroy = (id) => {
@@ -285,19 +298,20 @@ const onStatusFilterChange = (event) => {
                             </div>
 
                             <span class="card-thumbnail-image">
-                                
-                                <Image crossorigin="anonymous" v-if="slotProps.data.id != 1171" class="top"
-                                    v-lazy="{ src: slotProps.data.original_url || 'https://api.vimage./images/notfound.jpg', lifecycle: lazyOptions.lifecycle }"
-                                    width="100" preview />
-                                <img  crossorigin="anonymous" class="top" v-if="slotProps.data.id == 1171" lazy="loading" width="100" />
-
+           
                                 <Image crossorigin="anonymous" class="bottom"
-                                        v-if="slotProps.data.id != 1171 && slotProps.data.preview_animation && (slotProps.data.preview_animation.includes('png') ||  slotProps.data.preview_animation.includes('gif'))"
-                                    :src="slotProps.data.preview_animation ? slotProps.data.preview_animation : slotProps.data.preview_img" width="100" preview />
+                                        v-if=" slotProps.data.preview_animation && (slotProps.data.preview_animation.includes('png') ||  slotProps.data.preview_animation.includes('gif'))"
+                                    :src="slotProps.data.media ? slotProps.data.media.finished.images.backdrop : slotProps.data.thumbnail " width="100" preview />
                             </span>
-
                             <span class="card-thumbnail-image-fill">
-                                <img  crossorigin="anonymous" v-lazy="{ src: slotProps.data.preview_img ? slotProps.data.preview_img :  slotProps.data.thumbnail || 'https://api.dudeisland.eu/images/notfound.jpg', lifecycle: lazyOptions.lifecycle }"
+                                <ImageViewer
+      v-model="showViewer"
+      v-model:current-preview-index="currentIndex"
+      :preview-src-list="[slotProps.data.media.finished.images.backdrop]"
+      :viewer-title="viewerTitle"
+      @switch="handleSwitch"
+    />
+                                <img  crossorigin="anonymous" v-lazy="{ src:slotProps.data.media.finished ? slotProps.data.media?.finished?.images?.backdrop : slotProps.data.thumbnail || 'https://api.dudeisland.eu/images/notfound.jpg', lifecycle: lazyOptions.lifecycle }"
                                     width="100" preview />
                             </span>
 
