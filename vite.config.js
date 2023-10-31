@@ -1,11 +1,11 @@
 import { fileURLToPath, URL } from "node:url";
-import { viteStaticCopy } from "vite-plugin-static-copy";
 import path from 'path'
 import vue from "@vitejs/plugin-vue";
-import dotenv from "dotenv";
+import dotenv from "dotenv";	
 import { defineConfig, loadEnv } from "vite";
 
 dotenv.config(); // load env vars from .env
+
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -16,6 +16,7 @@ export default ({ mode }) => {
   return defineConfig({
     plugins: [
       vue(),
+/*
       viteStaticCopy({
         targets: [
           {
@@ -29,7 +30,7 @@ export default ({ mode }) => {
             dest: "",
           },
         ],
-      }),
+      }),*/
     ],
     define: {
       "process.env": env,

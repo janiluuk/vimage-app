@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import AppLayout from "@/layout/AppLayout.vue";
-import routes from "./routes";
 import AuthService from "@/services/auth/AuthService";
-import VideoLibraryTabs from "@/components/library/VideoLibraryTabs.vue";
 import UserProfile from "@/views/api/profile/UserProfile.vue";
 import VideoEdit from "@/components/video/VideoEdit.vue";
 import VideoEditDeforum from "@/components/video/VideoEditDeforum.vue";
@@ -13,6 +11,7 @@ import ForgotPassword from "@/views/pages/auth/ForgotPassword.vue";
 import PasswordReset from "@/views/api/PasswordReset.vue";
 import { ConnectableObservable } from "rxjs";
 import DeforumUI from "@/views/dev/DeforumUI.vue";
+import NotFound from "../views/pages/NotFound.vue";
 import SocialiteAuth from '@/views/SocialiteAuth.vue';
 
 const router = createRouter({
@@ -170,12 +169,6 @@ const router = createRouter({
           meta: { requiresAuth: true },
         },
         {
-          path: "/oldlibrary",
-          name: "OldLibrary",
-          component: VideoLibraryTabs,
-          meta: { requiresAuth: true },
-        },
-        {
           path: "/upload",
           name: "upload",
           meta: { requiresAuth: true },
@@ -194,29 +187,6 @@ const router = createRouter({
         {
           path: "/dev",
           component: () => import("@/views/dev/DevBoard.vue"),
-          children: [
-            {
-              path: "/dev",
-              component: () =>
-                import("@/views/dev/pages/FFMpegWebTranscoder.vue"),
-            },
-            {
-              path: "/dev/webcam",
-              component: () => import("@/views/dev/pages/Webcam.vue"),
-            },
-            {
-              path: "/dev/videomodal",
-              component: () => import("@/views/dev/pages/VideoModal.vue"),
-            },
-          ],
-        },
-        {
-          path: "/dev/deforum",
-          component: () => Deforum,
-        },
-        {
-          path: "/dev/deforumui",
-          component: () => DeforumUI,
         },
         // Other routes
         {
@@ -297,8 +267,11 @@ const router = createRouter({
       name: "error",
       component: () => import("@/views/pages/auth/Error.vue"),
     },
-
-    ...routes,
+    {
+      path: "/pages/notfound",
+      name: "notfound",
+      component: () => import("@/views/pages/NotFound.vue"),
+    },
   ],
 });
 

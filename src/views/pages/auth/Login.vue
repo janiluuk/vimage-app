@@ -6,7 +6,7 @@
         style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
         <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
           <div class="text-center mb-5">
-            <img src="/public/img/LandingpageHalloweenSmall.gif" alt="Image" height="200" class="mb-3" />
+            <img src="/img/LandingpageHalloweenSmall.gif" alt="Image" height="200" class="mb-3" />
             <div class="text-900 text-3xl font-medium mb-3">Welcome to vimage.ai</div>
             <span class="text-600 font-medium">Sign in to continue</span><p></p>
             <span class="text-600 font-medium">No account? <router-link to="/signup" custom v-slot="{ navigate }">
@@ -42,12 +42,13 @@
                 </span>
                 <span className="px-3 py-2 flex align-items-center text-white">Google</span>
               </Button>
-              <Button @click="socialite('facebook')" type ="button" class="facebook">
+<!--              <Button @click="socialite('facebook')" type ="button" class="facebook"> 
                 <span class="flex align-items-center px-2 bg-blue-500 text-white">
-                  <i className="pi pi-facebook"></i>
+                  <i className="pi pi-facebook"></i> 
                 </span>
                 <span className="px-3 py-2 flex align-items-center text-white">Facebook</span>
               </Button>
+-->
              <!--<Button type="button" class="discord" @click="socialite('discord')">
                 <span class=" flex align-items-center px-2 bg-bluegray-800 text-white">
                 <i className="pi pi-discord"></i>

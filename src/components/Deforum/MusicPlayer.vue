@@ -53,7 +53,7 @@
 
 <script>
 import { ref, watch, computed } from "vue";
-import { AVWaveform, useAVBars } from 'vue-audio-visual';
+// import { AVWaveform, useAVBars } from 'vue-audio-visual';
 
 export default {
   name: "MusicPlayer",

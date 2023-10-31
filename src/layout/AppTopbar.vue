@@ -28,11 +28,11 @@ onBeforeUnmount(() => {
 });
 
 const logoUrl = computed(() => {
-    return `/public/img/vimage-logo.png`;
+    return `/img/vimage-logo.png`;
 });
 
 const birdUrl = computed(() => {
-    return `/public/img/bird.png`;
+    return `/img/bird.png`;
 });
 
 const onTopBarActionButton = (route) => {

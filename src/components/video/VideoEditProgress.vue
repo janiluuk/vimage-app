@@ -19,7 +19,7 @@
             <p v-if="isJobApproved" class="mt-2 mb-0 text-xs text-primary text-center">
                 Waiting
                 for
-                a worker to pick the job up. Next slot in <b>{{  getFormattedDuration(job.queue.your_estimated_time) }} </b>..</p>
+                a worker to pick the job up. Next slot in <b>{{  getFormattedDuration(job.queue.estimated_time_for_all_jobs) }} </b>..</p>
     
         </div>
         <p v-if="(hasPreviewImage || hasPreviewAnimation) || progressAmount > 0"
@@ -119,7 +119,7 @@ export default {
             return Math.floor(new Date(Date.now()).getTime() / 1000);
         },
         amountOfTimeLeft() {
-            if (this.timeleft <= 0 || !this.timeleft) return this.getFormattedDuration(this.$props.job.estimated_time_left);
+            if (this.timeleft <= 0 || !this.timeleft) return this.getFormattedDuration(this.$props.job.estimated_time_for_all_jobs);
             return this.getFormattedDuration(this.timeleft);
         }
     },
@@ -133,7 +133,7 @@ export default {
             } else {
                 this.processTime++;
             }
-            if (this.$props.job.estimated_time_left >= 0 && (this.last_timeleft !== this.$props.job.estimated_time_left || this.timeleft <= 0)) {
+            if (this.$props.job.estimated_time_left >= 0 && (this.last_timeleft !== this.$props.job.estimated_time_for_all_jobs || this.timeleft <= 0)) {
                 this.last_timeleft = this.$props.job.estimated_time_left;
                 this.timeleft = this.$props.job.estimated_time_left;
             } else {

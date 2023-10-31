@@ -85,7 +85,6 @@ import ModelfileSelector from '@/components/Modelfile/ModelfileSelector.vue';
 import VideoEditOverlay from '@/components/video/VideoEditOverlay.vue';
 import VideoEditPreview from '@/components/video/VideoEditPreview.vue';
 import VideoEditToolbar from '@/components/video/VideoEditToolbar.vue';
-import VideoEntry from '@/components/video/VideoEntry.vue';
 import VideoPlayer from '@/components/video/VideoPlayer.vue';
 import showSwal from "@/mixins/showSwal.js";
 import _ from 'lodash';
@@ -171,7 +170,6 @@ export default {
     this.formChanged = false;
   },
   components: {
-    VideoEntry,
     ModelfileSelector,
     VideoPlayer,
     VideoEditOverlay,

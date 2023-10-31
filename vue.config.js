@@ -6,7 +6,7 @@ const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   outputDir: "dist",
   indexPath: "index.html",
-  transpileDependencies: false,
+  transpileDependencies: true,
   productionSourceMap: true,
   runtimeCompiler: true,
   lintOnSave: true,
@@ -26,6 +26,7 @@ module.exports = defineConfig({
     },
   },
   pluginOptions: {
+
     compression: {
       brotli: {
         filename: '[file].br[query]',
@@ -48,4 +49,5 @@ module.exports = defineConfig({
     },
     prettify: false,
   },
+
 });

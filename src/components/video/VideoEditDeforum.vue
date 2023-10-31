@@ -113,10 +113,10 @@
               Due to high demand, there may be extended wait times. Feel free to leave this page and return later; your content will be available in your <a href="/library/">library </a>once completed.
             </div>
 
-<div class="field-checkbox mb-0">
+<!--<div class="field-checkbox mb-0">
                 <Checkbox id="checkOption1" name="option" value="Chicago" v-model="checkboxValue" />
                 <label for="checkOption1">Alternatively, check this box if you'd like to receive a notification via email.</label>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -133,7 +133,6 @@ import ModelfileSelector from '@/components/Modelfile/ModelfileSelector.vue';
 import VideoEditOverlay from '@/components/video/VideoEditOverlay.vue';
 import VideoEditPreview from '@/components/video/VideoEditPreview.vue';
 import VideoEditToolbar from '@/components/video/VideoEditToolbar.vue';
-import VideoEntry from '@/components/video/VideoEntry.vue';
 import VideoPlayer from '@/components/video/VideoPlayer.vue';
 import showSwal from "@/mixins/showSwal.js";
 import _ from 'lodash';
@@ -221,7 +220,6 @@ export default {
     this.formChanged = false;
   },
   components: {
-    VideoEntry,
     ModelfileSelector,
     VideoPlayer,
     VideoEditOverlay,

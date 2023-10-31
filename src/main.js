@@ -1,18 +1,13 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import VueLazyLoad from 'vue3-lazyload'
-import PreviewableImage from 'vue-previewable-image'
-import { PreviewableImageOptions } from 'vue-previewable-image'
+import VueLazyLoad from 'vue3-lazyload';
 
 import store from "./store";
 import router from "./router";
 import SimpleVueValidator from 'simple-vue3-validator';
 import VuePlyr from 'vue-plyr';
 import 'vue-plyr/dist/vue-plyr.css';
-import PerfectScrollbar from 'vue3-perfect-scrollbar'
-import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
-import VueSilentbox from 'vue-silentbox'
-import { AVPlugin } from 'vue-audio-visual'
+//import { AVPlugin } from 'vue-audio-visual'
 //import MaterialDashboard from "./material-dashboard";
 //import Material from "./components/Material_lib/material";
 import PrimeVue from 'primevue/config';
@@ -128,13 +123,7 @@ app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
 app.use(DialogService);
 app.use(ConfirmationService);
-app.use(AVPlugin);
-app.use(PerfectScrollbar);
-app.use(VueSilentbox);
-app.use(PreviewableImage, {
-  // set global component name
-  componentName: 'PreviewableImage',
-});
+//app.use(AVPlugin);
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
