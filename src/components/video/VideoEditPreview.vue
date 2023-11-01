@@ -1,5 +1,5 @@
 <template>
-    <div class="pr-3" v-if="job.status != ''">
+    <div class="" v-if="job.status != ''">
         <!-- Sample video -->
         <div class="sample-container mb-1">
 
@@ -201,9 +201,9 @@ export default {
 .preview-100>img,
 .preview-100>video,
 img.preview-100 {
-    width: auto;
+    width: 100%;
     max-width: 400px;
-    max-height: 400px;
+    max-height: 60vh;
     margin: auto;
 }
 

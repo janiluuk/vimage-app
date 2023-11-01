@@ -9,11 +9,10 @@
     </div>
     <div class="editor" v-if="job.status != null">
       <!-- Main settings container -->
-      <Splitter class="mb-5 editor-container">
-        <SplitterPanel :size="30" :minSize="10" :gutterSize=0 class="mw-0">
-          <VideoEditPreview :job="job" />
-        </SplitterPanel>
-        <SplitterPanel :size="70" :minSize="40" class="mw-0">
+      <div class="grid mb-5 editor-container">
+        <div class="col-12 md:col-6 lg:col-4">
+          <VideoEditPreview :job="job" /></div>
+        <div class="col-12 md:col-6 lg:col-8">
           <form v-on:submit.prevent="">
             <!--
             <div class="col-12 md:mb-2 mb-3 mt-2">
@@ -26,7 +25,7 @@
            
             </div>
              -->
-            <div class="pl-3">
+            <div class="">
 
               <div class="p-fluid formgrid grid">
                 <div class="field col-12 md:col-6 md:mb-2 mb-3">
@@ -107,7 +106,7 @@
             @submit:finalize="handleFinalizeJob" />
           
       <div v-if="isVideoProcessing">
-        <div class="soft-message ml-3" style="background-color: #3b5b72">
+        <div class="soft-message" style="background-color: #3b5b72">
           <div class="p-3">
             <div class="mb-1" >
               Due to high demand, there may be extended wait times. Feel free to leave this page and return later; your content will be available in your <a href="/library/">library </a>once completed.
@@ -119,9 +118,8 @@
             </div>
           </div>
         </div>
+      </div></div>
       </div>
-        </SplitterPanel>
-      </Splitter>
       <OverlayPanel ref="op">
       </OverlayPanel>
     </div>
