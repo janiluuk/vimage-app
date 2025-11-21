@@ -11,6 +11,8 @@ import Signup from "@/views/pages/auth/Signup.vue";
 import ForgotPassword from "@/views/pages/auth/ForgotPassword.vue";
 import PasswordReset from "@/views/api/PasswordReset.vue";
 import DeforumUI from "@/views/dev/DeforumUI.vue";
+import DeforumationQT from "@/views/dev/DeforumationQT.vue";
+import MageAppMain from "@/views/MageAppMain.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -34,6 +36,11 @@ const router = createRouter({
           path: '/soundscape',
           name: 'SoundscapeCreator',
           component: () => import('@/views/SoundscapeCreator.vue')
+        },
+        {
+          path: '/mage',
+          name: 'MageApp',
+          component: MageAppMain
         },
 
         {
@@ -219,6 +226,10 @@ const router = createRouter({
         {
           path: "/dev/deforumui",
           component: () => DeforumUI,
+        },
+        {
+          path: "/dev/deforumation-qt",
+          component: () => DeforumationQT,
         },
         // Other routes
         {

@@ -18,7 +18,8 @@
     "build": "vite build",
     "lint": "vite optimize --force",
     "dev": "vite --cors --host --port 8080 --debug trace",
-    "api": "node backend/server.js"
+    "api": "node backend/server.js",
+    "test": "node --test backend"
   },
   "dependencies": {
     "@cloudgeek/vue3-video-player": "^0.3.10",

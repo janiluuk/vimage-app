@@ -63,20 +63,28 @@ async function generateAndStream(text, res, host = '127.0.0.1:8188') {
 
   const audioStream = bufferToStream(audioBuffer);
 
-  ffmpeg(audioStream)
-    .setFfmpegPath(ffmpegPath)
-    .inputOptions(['-f wav'])
-    .complexFilter([
-      'acompressor=threshold=-20dB:ratio=2:attack=5:release=50',
-      'highpass=f=120',
-      'aecho=0.8:0.9:1000:0.3',
-      'alimiter=limit=0.95'
-    ])
-    .audioChannels(2)
-    .audioCodec('aac')
-    .audioBitrate('128k')
-    .format('adts')
-    .pipe(res);
+  return new Promise((resolve, reject) => {
+    const command = ffmpeg(audioStream)
+      .setFfmpegPath(ffmpegPath)
+      .inputOptions(['-f wav'])
+      .complexFilter([
+        'acompressor=threshold=-20dB:ratio=2:attack=5:release=50',
+        'highpass=f=120',
+        'aecho=0.8:0.9:1000:0.3',
+        'alimiter=limit=0.95'
+      ])
+      .audioChannels(2)
+      .audioCodec('aac')
+      .audioBitrate('128k')
+      .format('adts');
+
+    const outputStream = command.pipe(res);
+
+    command.on('end', resolve);
+    command.on('error', reject);
+    outputStream.on('error', reject);
+    res.on('close', resolve);
+  });
 }
 
 module.exports = { generateAndStream };
