@@ -11,7 +11,6 @@ import PromptTool from "@/components/prompt/PromptTool.vue";
 import Signup from "@/views/pages/auth/Signup.vue";
 import ForgotPassword from "@/views/pages/auth/ForgotPassword.vue";
 import PasswordReset from "@/views/api/PasswordReset.vue";
-import { ConnectableObservable } from "rxjs";
 import DeforumUI from "@/views/dev/DeforumUI.vue";
 
 const router = createRouter({
@@ -19,7 +18,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      component: () => AppLayout,
+      component: AppLayout,
       meta: { requiresAuth: true },
       children: [
         {
@@ -31,6 +30,11 @@ const router = createRouter({
           path: '/frontpage',
           name: 'Frontpage',
           component: () => import('@/views/FrontPage.vue')
+        },
+        {
+          path: '/soundscape',
+          name: 'SoundscapeCreator',
+          component: () => import('@/views/SoundscapeCreator.vue')
         },
 
         {
@@ -227,7 +231,7 @@ const router = createRouter({
         {
           path: "/edit/vid2vid/:id", // :id is a dynamic route parameter for the video ID
           name: "Video Editor",
-          requiresAuth: true,
+          meta: { requiresAuth: true },
           component: VideoEdit,
         },
         {
@@ -257,7 +261,7 @@ const router = createRouter({
     {
         path: "/signout",
         name: "Sign",
-        requiredAuth: true,
+        meta: { requiresAuth: true },
         component: () => import("@/views/pages/auth/Signout.vue"),
     },
     {

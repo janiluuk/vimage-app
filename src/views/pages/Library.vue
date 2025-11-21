@@ -171,7 +171,7 @@ const mapStates = () => {
 const mapGetters = () => {
     const store = useStore();
     return Object.fromEntries(
-        
+
         Object.keys(store.getters['videojobs']).map(
             key => [key, computed(() => store.getters.videojobs[key])]
         )
@@ -208,12 +208,11 @@ const getMenu = (id, type) => {
                 });
             }
         },
-        {
-            label: 'Use as template',
-            icon: 'pi pi-copy'
-        },
+
         {
             label: 'Download',
+            disabled: status !== 'finished',
+
             icon: 'pi pi-download',
             command: (target) => {
 
@@ -268,7 +267,7 @@ const onStatusFilterChange = (event) => {
 
 <template>
     <div class="floating-button"><a href="/upload/">
-            <Button icon="pi pi-upload" label="Video"
+            <Button icon="pi pi-plus" label="Create!"
                 class="p-button p-component bg-gradient-vibrant p-button-lg p-button-rounded p-button-success"></Button>
         </a>
     </div>
@@ -401,9 +400,9 @@ const onStatusFilterChange = (event) => {
                                 :value="slotProps.data.progress" class="text-xs overlay-progress-bar mb-1"></ProgressBar>
                             <div class="flex align-items-start justify-content-between">
                                 <div>
-                                    <div class="text-md font-semibold mb-1">{{ slotProps.data.prompt }}</div>
-                                    <div class="text-sm text-light mb-1">
-                                        <i class="pi pi-history mr-1"></i>
+                                    <div class="text-sm font-semibold mb-1">{{ slotProps.data.prompt }}</div>
+                                    <div class="text-xs text-light mb-1">
+                                        <i class="text-xs pi pi-history mr-1"></i>
                                         <span>{{ moment(slotProps.data.updated_at).fromNow()
                                         }}</span>
                                     </div>
@@ -476,7 +475,55 @@ span>img[lazy=error] {
 
   img[lazy=loaded] {
   }
+.library {
+  :deep .p-dataview-header {
+    border-width: 0;
+    border-radius: 0;
+    padding: 0;
+    position: sticky;
+    top: 5rem;
+    z-index: 2;
+    background: rgb(18 18 18 / 20%);
+    backdrop-filter: blur(30px);
+  }
 
+  :deep .p-dataview-content {
+    border: none;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  :deep .p-paginator-bottom {
+    margin-bottom: 5rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  :deep .p-menubar {
+    background: transparent;
+  }
+}
+
+.menu-list {
+  display: flex;
+  flex-flow: row;
+  column-gap: 0.5rem;
+}
+
+.grid-item {
+  border-radius: 6px;
+  padding: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s linear, border-color 0.2s linear;
+
+  &:hover {
+    border-color: var(--surface-border);
+    background-color: var(--surface-card);
+  }
+}
 .card-thumbnail-container {
     position: relative;
     height: 100%;
@@ -514,6 +561,16 @@ span>img[lazy=error] {
 @keyframes loading {
   to {
     background-position-x: -20%;
+  }
+}
+
+@media (max-width: 860px) {
+  .library {
+    :deep .p-menubar {
+      flex-flow: column-reverse;
+      row-gap: 0.5rem;
+      align-items: flex-start;
+    }
   }
 }
 
