@@ -29,12 +29,35 @@
       loop
       ref="audioPlayer"
     />
+
+    <div class="queue-status" v-if="status">
+      <h2>Processing status</h2>
+      <p v-if="status.processing">Currently processing: {{ status.processing.metadata.text || 'Pending text' }}</p>
+      <p v-else>Nothing processing right now.</p>
+      <p>Items in queue: {{ status.queued }}</p>
+
+      <h3>Recent history</h3>
+      <ul>
+        <li v-for="item in status.recent" :key="item.id">
+          <strong>{{ item.status }}</strong> — {{ item.metadata.text || 'No text provided' }}
+        </li>
+      </ul>
+
+      <div class="queue-list">
+        <h3>Queued items</h3>
+        <ul>
+          <li v-for="item in queueItems" :key="item.id">{{ item.metadata.text || 'Queued request' }}</li>
+        </ul>
+      </div>
+    </div>
+    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import AudioVisualizer from '@/components/AudioVisualizer.vue'
+import MageApiService from '@/services/mage/MageApiService'
 
 const prompt = ref('')
 const selectedMood = ref('')
@@ -42,6 +65,10 @@ const moods = ['Relaxing', 'Energizing']
 const recording = ref(false)
 const audioSrc = ref('')
 const audioPlayer = ref(null)
+const status = ref(null)
+const queueItems = ref([])
+const errorMessage = ref('')
+let intervalId
 
 function generate() {
   const params = new URLSearchParams({
@@ -50,6 +77,29 @@ function generate() {
   })
   audioSrc.value = `/api/stream?${params.toString()}`
 }
+
+async function refreshQueue() {
+  try {
+    const [latestStatus, queue] = await Promise.all([
+      MageApiService.getStatus(),
+      MageApiService.getQueue()
+    ])
+    status.value = latestStatus
+    queueItems.value = queue.queued
+    errorMessage.value = ''
+  } catch (error) {
+    errorMessage.value = error.message
+  }
+}
+
+onMounted(() => {
+  refreshQueue()
+  intervalId = window.setInterval(refreshQueue, 5000)
+})
+
+onBeforeUnmount(() => {
+  window.clearInterval(intervalId)
+})
 </script>
 
 <style scoped>
@@ -78,6 +128,19 @@ textarea {
 }
 audio {
   width: 100%;
+  margin-top: 1rem;
+}
+.queue-status {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.queue-status ul {
+  padding-left: 1.2rem;
+}
+
+.error {
+  color: #e44;
   margin-top: 1rem;
 }
 </style>
